@@ -1,0 +1,19 @@
+apiVersion: skaffold/v2beta17
+kind: Config
+metadata:
+  name: notification-service
+build:
+  local:
+    useBuildkit: true
+  artifacts:
+  - image: dev/notification-service
+    docker:
+      dockerfile: Dockerfile
+deploy:
+  kubectl:
+    manifests:
+    - deployment.yaml
+portForward:
+- resourceType: service
+  resourceName: notification-service
+  port: 8060
